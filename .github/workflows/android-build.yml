@@ -42,6 +42,28 @@ jobs:
       - name: Run debug unit tests
         run: ./gradlew testDebugUnitTest --no-daemon --stacktrace
 
+      - name: Publish unit test failures
+        if: failure()
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from xml.etree import ElementTree
+
+          reports = list(Path("app/build/test-results").rglob("TEST-*.xml"))
+          if not reports:
+              print("::error title=Unit test reports::No JUnit XML reports were produced.")
+          for report in reports:
+              root = ElementTree.parse(report).getroot()
+              for case in root.iter("testcase"):
+                  failure = case.find("failure") or case.find("error")
+                  if failure is None:
+                      continue
+                  suite = case.get("classname", report.stem)
+                  name = case.get("name", "unknown")
+                  detail = " ".join((failure.text or failure.get("message", "Test failed")).split())
+                  print(f"::error title={suite}.{name}::{detail[:1500]}")
+          PY
+
       - name: Build debug APK
         run: ./gradlew :app:assembleDebug --no-daemon --stacktrace
 
