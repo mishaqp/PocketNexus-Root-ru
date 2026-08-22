@@ -228,5 +228,34 @@
     <string name="custom_tool_editor_title_create">Новый пользовательский инструмент</string>
     <string name="custom_tool_editor_description">Настройте пользовательский инструмент. После сохранения агент сможет вызывать его при необходимости. Запуск команд несёт риски, используйте функцию осмотрительно.</string>
     <string name="custom_tool_field_name">Название инструмента</string>
+    <string name="custom_tool_field_name_hint">Например: open_project</string>
+    <string name="custom_tool_field_description">Описание инструмента</string>
+    <string name="custom_tool_field_description_hint">Опишите назначение инструмента, чтобы агент понимал, когда его использовать.</string>
+    <string name="custom_tool_field_enabled">Включить инструмент</string>
+    <string name="custom_tool_field_command">Фиксированная команда</string>
+    <string name="custom_tool_field_command_hint">Например: bash /sdcard/my_script.sh</string>
+    <string name="custom_tool_save_action">Сохранить пользовательский инструмент</string>
+    <string name="custom_tool_error_name_required">Введите название инструмента</string>
+    <string name="custom_tool_error_description_required">Введите описание инструмента</string>
+    <string name="custom_tool_error_command_required">Введите фиксированную команду</string>
+    <string name="custom_tool_error_name_invalid">Название должно начинаться с буквы или подчёркивания и содержать только буквы, цифры либо подчёркивания</string>
+    <string name="custom_tool_error_name_duplicate">Такое название уже существует. Выберите другое и повторите попытку.</string>
+    <string name="custom_tool_error_name_reserved">Это название занято встроенным инструментом</string>
+    <string name="custom_tool_error_command_unsafe">Команда заблокирована политикой безопасности. Измените её и повторите попытку.</string>
+    <string name="custom_tool_error_load_failed">Не удалось загрузить пользовательские инструменты: %1$s</string>
+    <string name="custom_tool_error_save_failed">Не удалось сохранить пользовательский инструмент: %1$s</string>
+    <string name="custom_tool_delete_dialog_title">Удалить пользовательский инструмент</string>
+    <string name="custom_tool_delete_dialog_text">Удалить инструмент «%1$s»? Это действие нельзя отменить.</string>
+    <string name="custom_tool_error_delete_failed">Не удалось удалить пользовательский инструмент: %1$s</string>
+    <string name="custom_tool_save_failed">Не удалось сохранить: %1$s</string>
+    <string name="mcp_page_description">Настройте подключение и авторизацию для MCP-сервисов. После сохранения Nexus автоматически обнаружит доступные инструменты во время работы.</string>
+    <string name="mcp_page_empty_description">Нажмите кнопку в правом верхнем углу, чтобы добавить первый сервер.</string>
+    <string name="mcp_loading">Загрузка сохранённых MCP-сервисов...</string>
+    <string name="mcp_editor_title_create">Новый MCP-сервис</string>
+    <string name="mcp_field_name">Название</string>
+    <string name="mcp_field_name_hint">Например: my-xxx-mcp-server</string>
+    <string name="mcp_field_url">URL</string>
+    <string name="mcp_field_url_hint">Например: https://a.b.c/mcp</string>
+    <string name="mcp_field_enabled">Включить сервис</string>
     <!-- L10N_CONTENT -->
 </resources>
