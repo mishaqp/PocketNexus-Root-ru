@@ -82,7 +82,7 @@ class AgentRuntimeService : Service() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 CHANNEL_ID,
-                "Agent Runtime",
+                getString(AppR.string.notif_agent_runtime_channel_name),
                 NotificationManager.IMPORTANCE_LOW,
             )
             val manager = getSystemService(NotificationManager::class.java)
@@ -101,8 +101,8 @@ class AgentRuntimeService : Service() {
             null
         }
         return Notification.Builder(this, CHANNEL_ID)
-            .setContentTitle("Nexus Agent Runtime")
-            .setContentText("Running")
+            .setContentTitle(getString(AppR.string.notif_agent_runtime_title))
+            .setContentText(getString(AppR.string.notif_agent_runtime_running))
             .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setContentIntent(pendingIntent)
             .setOngoing(true)
