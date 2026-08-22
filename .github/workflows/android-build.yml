@@ -64,6 +64,22 @@ jobs:
                   print(f"::error title={suite}.{name}::{detail[:1500]}")
           PY
 
+      - name: Capture Gradle failure
+        if: failure()
+        run: |
+          set +e
+          ./gradlew testDebugUnitTest --no-daemon --stacktrace > gradle-test-failure.log 2>&1
+          status=$?
+          python3 - <<'PY'
+          from pathlib import Path
+
+          output = Path("gradle-test-failure.log").read_text(errors="replace")
+          tail = "\n".join(output.splitlines()[-60:])[-6000:]
+          escaped = tail.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
+          print(f"::error title=Gradle failure tail::exit code {status}%0A{escaped}")
+          PY
+          exit 0
+
       - name: Build debug APK
         run: ./gradlew :app:assembleDebug --no-daemon --stacktrace
 
