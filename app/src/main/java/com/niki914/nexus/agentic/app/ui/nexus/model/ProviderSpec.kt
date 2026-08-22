@@ -58,6 +58,8 @@ object ProviderSpecs {
         OpenAiSpec,
         AnthropicSpec,
         GoogleSpec,
+        OpenRouterSpec,
+        CustomSpec,
     )
 
     fun find(providerId: String?): ProviderSpec {
@@ -116,6 +118,32 @@ private data object AnthropicSpec : ProviderSpec {
             darkContentColorRes = R.color.provider_anthropic_button_dark_content,
             lightContentColorRes = R.color.provider_anthropic_button_light_content,
         ),
+    )
+}
+
+private data object OpenRouterSpec : ProviderSpec {
+    override val id: String = "openrouter"
+    override val brandName: String = "OpenRouter"
+    override val officialEndpoint: String = "https://openrouter.ai/api/v1/chat/completions"
+    override val exampleModelId: String = "deepseek/deepseek-chat"
+    override val showEndpointConfigInOnboarding: Boolean = true
+    override val iconRes: Int = R.drawable.openai
+    override val tintIcon: Boolean = true
+    override val visualTokens: ProviderVisualTokens = ProviderVisualTokens(
+        button = ProviderButtonTokens(),
+    )
+}
+
+private data object CustomSpec : ProviderSpec {
+    override val id: String = "custom"
+    override val brandName: String = "Custom (OpenAI-compatible)"
+    override val officialEndpoint: String = ""
+    override val exampleModelId: String = ""
+    override val showEndpointConfigInOnboarding: Boolean = true
+    override val iconRes: Int = R.drawable.openai
+    override val tintIcon: Boolean = true
+    override val visualTokens: ProviderVisualTokens = ProviderVisualTokens(
+        button = ProviderButtonTokens(),
     )
 }
 
