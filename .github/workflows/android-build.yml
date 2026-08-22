@@ -11,9 +11,8 @@ on:
 
 permissions:
   contents: read
-  pull-requests: write
 
-jobs:
+ jobs:
   build-debug-apk:
     name: Build debug APK
     runs-on: ubuntu-latest
@@ -71,32 +70,18 @@ jobs:
           set +e
           ./gradlew testDebugUnitTest --no-daemon --stacktrace > gradle-test-failure.log 2>&1
           status=$?
-          python3 - <<'PY'
-          import json
-          import os
-          from pathlib import Path
-          from urllib.request import Request, urlopen
-
-          output = Path("gradle-test-failure.log").read_text(errors="replace")
-          tail = "\n".join(output.splitlines()[-80:])[-12000:]
-          event = json.loads(Path(os.environ["GITHUB_EVENT_PATH"]).read_text())
-          pull_request = event.get("pull_request")
-          if pull_request:
-              body = f"CI Gradle diagnostic (exit code {status}):\n\n```text\n{tail}\n```"
-              request = Request(
-                  f"{os.environ['GITHUB_API_URL']}/repos/{os.environ['GITHUB_REPOSITORY']}/issues/{pull_request['number']}/comments",
-                  data=json.dumps({"body": body}).encode(),
-                  headers={
-                      "Accept": "application/vnd.github+json",
-                      "Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}",
-                      "Content-Type": "application/json",
-                  },
-                  method="POST",
-              )
-              with urlopen(request) as response:
-                  print(f"Published Gradle diagnostic comment: {response.status}")
-          PY
+          printf '\nDiagnostic Gradle exit code: %s\n' "$status" >> gradle-test-failure.log
+          tail -80 gradle-test-failure.log
           exit 0
+
+      - name: Upload Gradle diagnostic
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gradle-test-failure-log
+          path: gradle-test-failure.log
+          if-no-files-found: error
+          retention-days: 7
 
       - name: Build debug APK
         run: ./gradlew :app:assembleDebug --no-daemon --stacktrace
