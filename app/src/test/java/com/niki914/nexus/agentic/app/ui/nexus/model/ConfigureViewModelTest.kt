@@ -340,6 +340,62 @@ class ConfigureViewModelTest {
     }
 
     @Test
+    fun refreshModels_success_persistsModelsToState() = runTest {
+        var requestedEndpoint: String? = null
+        var requestedApiKey: String? = null
+        var requestedProviderId: String? = null
+        val viewModel = ConfigureViewModel(
+            ConfigureViewModelDependencies.Default.copy(
+                loadLlmConfig = { LlmConfig() },
+                loadModels = { endpoint, apiKey, providerId ->
+                    requestedEndpoint = endpoint
+                    requestedApiKey = apiKey
+                    requestedProviderId = providerId
+                    listOf("gpt-4.1", "gpt-5.4")
+                },
+            ),
+        )
+
+        viewModel.sendIntent(ConfigureIntent.Initialize("openai"))
+        advanceUntilIdle()
+        viewModel.sendIntent(ConfigureIntent.UpdateApiKey(" sk-demo "))
+        viewModel.sendIntent(ConfigureIntent.RefreshModels)
+        advanceUntilIdle()
+
+        val state = viewModel.uiStateFlow.value
+        assertEquals(ProviderSpecs.find("openai").officialEndpoint, requestedEndpoint)
+        assertEquals("sk-demo", requestedApiKey)
+        assertEquals("openai", requestedProviderId)
+        assertEquals(listOf("gpt-4.1", "gpt-5.4"), state.availableModels)
+        assertFalse(state.modelsLoading)
+        assertNull(state.modelsErrorResId)
+    }
+
+    @Test
+    fun refreshModels_failure_setsErrorState() = runTest {
+        val viewModel = ConfigureViewModel(
+            ConfigureViewModelDependencies.Default.copy(
+                loadLlmConfig = { LlmConfig() },
+                loadModels = { _, _, _ -> error("network unavailable") },
+            ),
+        )
+
+        viewModel.sendIntent(ConfigureIntent.Initialize("openai"))
+        advanceUntilIdle()
+        viewModel.sendIntent(ConfigureIntent.UpdateApiKey("sk-demo"))
+        viewModel.sendIntent(ConfigureIntent.RefreshModels)
+        advanceUntilIdle()
+
+        val state = viewModel.uiStateFlow.value
+        assertTrue(state.availableModels.isEmpty())
+        assertFalse(state.modelsLoading)
+        assertEquals(
+            R.string.ui_onboard_configure_model_refresh_failed,
+            state.modelsErrorResId,
+        )
+    }
+
+    @Test
     fun hasUnsavedChanges_isAlwaysFalseForOnboardingScene() = runTest {
         val viewModel = ConfigureViewModel(
             ConfigureViewModelDependencies.Default.copy(
