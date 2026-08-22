@@ -24,6 +24,9 @@ data class ConfigureUiState(
     val modelInput: String = "",
     val apiKeyInput: String = "",
     val apiKeyVisible: Boolean = false,
+    val availableModels: List<String> = emptyList(),
+    val modelsLoading: Boolean = false,
+    @param:StringRes val modelsErrorResId: Int? = null,
     @param:StringRes val endpointErrorResId: Int? = null,
     @param:StringRes val modelErrorResId: Int? = null,
     @param:StringRes val apiKeyErrorResId: Int? = null,
@@ -73,6 +76,7 @@ sealed interface ConfigureIntent {
     data class UpdateApiKey(val value: String) : ConfigureIntent
     data class UpdatePrompt(val value: String) : ConfigureIntent
     data class UpdateProxy(val value: String) : ConfigureIntent
+    data object RefreshModels : ConfigureIntent
     data object ToggleApiKeyVisibility : ConfigureIntent
     data object Save : ConfigureIntent
 }
@@ -96,12 +100,15 @@ internal data class ConfigureViewModelDependencies(
         apiKey: String,
     ) -> Unit,
     val saveLlmConfig: suspend (LlmConfig) -> Unit,
+    val loadModels: suspend (endpoint: String, apiKey: String, providerId: String) -> List<String>,
 ) {
     companion object {
         val Default = ConfigureViewModelDependencies(
             loadLlmConfig = { XRepo.llm() },
             saveLlmAccess = XRepo::saveLlmAccess,
             saveLlmConfig = XRepo::saveLlm,
+            loadModels = ModelCatalogLoader::load,
+
         )
     }
 }
@@ -126,6 +133,7 @@ class ConfigureViewModel internal constructor(
             is ConfigureIntent.UpdateApiKey -> updateApiKey(intent.value)
             is ConfigureIntent.UpdatePrompt -> updatePrompt(intent.value)
             is ConfigureIntent.UpdateProxy -> updateProxy(intent.value)
+            ConfigureIntent.RefreshModels -> refreshModels()
             ConfigureIntent.ToggleApiKeyVisibility -> toggleApiKeyVisibility()
             ConfigureIntent.Save -> save()
         }
@@ -199,6 +207,9 @@ class ConfigureViewModel internal constructor(
                 modelInput = savedModel.ifBlank { providerSpec.exampleModelId },
                 apiKeyInput = savedApiKey,
                 apiKeyVisible = false,
+                availableModels = emptyList(),
+                modelsLoading = false,
+                modelsErrorResId = null,
                 endpointErrorResId = null,
                 modelErrorResId = null,
                 apiKeyErrorResId = null,
@@ -233,6 +244,9 @@ class ConfigureViewModel internal constructor(
                 modelInput = modelInput,
                 apiKeyInput = llmConfig.apiKey,
                 apiKeyVisible = false,
+                availableModels = emptyList(),
+                modelsLoading = false,
+                modelsErrorResId = null,
                 endpointErrorResId = null,
                 modelErrorResId = null,
                 apiKeyErrorResId = null,
@@ -261,6 +275,9 @@ class ConfigureViewModel internal constructor(
                 modelInput = providerSpec.exampleModelId,
                 apiKeyInput = if (keepApiKey) llmConfig.apiKey else "",
                 apiKeyVisible = false,
+                availableModels = emptyList(),
+                modelsLoading = false,
+                modelsErrorResId = null,
                 endpointErrorResId = null,
                 modelErrorResId = null,
                 apiKeyErrorResId = null,
@@ -290,6 +307,8 @@ class ConfigureViewModel internal constructor(
                 endpointInput = nextEndpointInput,
                 lastCustomEndpointInput = nextLastCustomEndpointInput,
                 endpointErrorResId = null,
+                availableModels = emptyList(),
+                modelsErrorResId = null,
                 inlineError = null,
             )
         }
@@ -305,8 +324,47 @@ class ConfigureViewModel internal constructor(
                     lastCustomEndpointInput
                 },
                 endpointErrorResId = null,
+                availableModels = emptyList(),
+                modelsErrorResId = null,
                 inlineError = null,
             )
+        }
+    }
+
+    private suspend fun refreshModels() {
+        val state = currentState
+        if (state.modelsLoading) return
+
+        updateState {
+            copy(
+                modelsLoading = true,
+                modelsErrorResId = null,
+                inlineError = null,
+            )
+        }
+        try {
+            val models = dependencies.loadModels(
+                endpoint = state.resolvedEndpoint(),
+                apiKey = state.apiKeyInput.trim(),
+                providerId = state.providerSpec.id,
+            )
+            updateState {
+                copy(
+                    availableModels = models,
+                    modelsLoading = false,
+                    modelsErrorResId = null,
+                )
+            }
+        } catch (throwable: Throwable) {
+            if (throwable is CancellationException) throw throwable
+            Logger.w(LOG_TAG, "model catalog load failed: ${throwable.message}")
+            updateState {
+                copy(
+                    availableModels = emptyList(),
+                    modelsLoading = false,
+                    modelsErrorResId = R.string.ui_onboard_configure_model_refresh_failed,
+                )
+            }
         }
     }
 
@@ -325,6 +383,8 @@ class ConfigureViewModel internal constructor(
             copy(
                 apiKeyInput = value,
                 apiKeyErrorResId = null,
+                availableModels = emptyList(),
+                modelsErrorResId = null,
                 inlineError = null,
             )
         }
