@@ -12,7 +12,7 @@ on:
 permissions:
   contents: read
 
- jobs:
+jobs:
   build-debug-apk:
     name: Build debug APK
     runs-on: ubuntu-latest
