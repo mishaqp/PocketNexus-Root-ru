@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notif_agent_runtime_channel_name">Agent 服务</string>
+    <string name="notif_agent_runtime_title">Nexus Agent</string>
+    <string name="notif_agent_runtime_running">运行中</string>
+</resources>
