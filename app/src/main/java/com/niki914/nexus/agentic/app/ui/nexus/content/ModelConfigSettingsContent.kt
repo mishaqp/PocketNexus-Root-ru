@@ -55,7 +55,7 @@ fun ModelConfigSettingsContent(
                 }
 
                 ConfigureEffect.FocusModel -> {
-                    openProviderPickAfterSave = false
+                    openProviderPickfterSave = false
                     pendingFocusField = ConfigureEditableField.Model
                 }
 
@@ -66,7 +66,7 @@ fun ModelConfigSettingsContent(
 
                 ConfigureEffect.FocusEndpoint -> {
                     openProviderPickAfterSave = false
-                    pendingFocusField = ConfigureEditableField.Endpoint
+                    pendingFocusField = ConfigureEditableField.Remote
                 }
 
                 ConfigureEffect.FocusProxy -> {
@@ -110,6 +110,9 @@ fun ModelConfigSettingsContent(
             },
             onModelChange = { model ->
                 viewModel.sendIntent(ConfigureIntent.UpdateModel(model))
+            },
+            onRefreshModels = {
+                viewModel.sendIntent(ConfigureIntent.RefreshModels)
             },
             onApiKeyChange = { apiKey ->
                 viewModel.sendIntent(ConfigureIntent.UpdateApiKey(apiKey))
