@@ -55,7 +55,7 @@ fun ModelConfigSettingsContent(
                 }
 
                 ConfigureEffect.FocusModel -> {
-                    openProviderPickfterSave = false
+                    openProviderPickAfterSave = false
                     pendingFocusField = ConfigureEditableField.Model
                 }
 
@@ -66,7 +66,7 @@ fun ModelConfigSettingsContent(
 
                 ConfigureEffect.FocusEndpoint -> {
                     openProviderPickAfterSave = false
-                    pendingFocusField = ConfigureEditableField.Remote
+                    pendingFocusField = ConfigureEditableField.Endpoint
                 }
 
                 ConfigureEffect.FocusProxy -> {
