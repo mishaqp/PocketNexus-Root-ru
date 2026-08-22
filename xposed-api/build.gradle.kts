@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.niki914.nexus.xposed.api"
-    compileSdk = 37
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 26
