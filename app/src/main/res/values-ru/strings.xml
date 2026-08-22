@@ -257,6 +257,86 @@
     <string name="mcp_field_url">URL</string>
     <string name="mcp_field_url_hint">Например: https://a.b.c/mcp</string>
     <string name="mcp_field_enabled">Включить сервис</string>
-    <string name="mcp_field_headers">Заголовки</string>
-    <!-- L10N_CONTENT -->
+    <string name="mcp_field_headers">Пользовательские заголовки</string>
+    <string name="mcp_field_headers_hint">{
+  "Authorization": "Bearer xxx"
+}</string>
+    <string name="mcp_save_action">Сохранить MCP-сервис</string>
+    <string name="mcp_error_name_required">Введите название</string>
+    <string name="mcp_error_name_duplicate">Такое название уже существует. Выберите другое и повторите попытку.</string>
+    <string name="mcp_error_url_required">Введите URL</string>
+    <string name="mcp_error_url_invalid">Поддерживаются только URL с http:// или https://</string>
+    <string name="mcp_error_headers_invalid_json">Заголовки не являются допустимым JSON</string>
+    <string name="mcp_error_headers_not_object">Заголовки должны быть JSON-объектом</string>
+    <string name="mcp_error_headers_empty_key">Название заголовка не может быть пустым</string>
+    <string name="mcp_delete_dialog_title">Удалить MCP-сервер</string>
+    <string name="mcp_delete_dialog_text">Удалить MCP-сервер «%1$s»? Это действие нельзя отменить.</string>
+    <string name="mcp_error_headers_non_string">Значение заголовка должно быть строкой</string>
+    <string name="update_dialog_title">Доступна новая версия</string>
+    <string name="update_dialog_text">Выпущена версия v%1$s, рекомендуется обновиться</string>
+    <string name="update_dialog_confirm">Обновить</string>
+    <string name="update_dialog_cancel">Позже</string>
+    <string name="notif_network_error_title">Ошибка сети</string>
+    <string name="notif_network_error_body">Не удалось подключиться к сети. Проверьте подключение и повторите попытку.</string>
+    <string name="error_mcp_load_failed">Не удалось загрузить конфигурацию MCP</string>
+    <string name="error_mcp_save_failed">Не удалось сохранить конфигурацию MCP</string>
+    <string name="error_mcp_delete_failed">Не удалось удалить конфигурацию MCP</string>
+    <string name="error_exec_rules_load_failed">Не удалось загрузить правила выполнения</string>
+    <string name="error_exec_rules_save_failed">Не удалось сохранить правила выполнения</string>
+    <string name="error_exec_rules_delete_failed">Не удалось удалить правила выполнения</string>
+    <string name="error_skill_load_failed">Не удалось загрузить Skills</string>
+    <string name="error_skill_save_failed">Не удалось сохранить Skill</string>
+    <string name="error_skill_read_failed">Не удалось прочитать Skill</string>
+    <string name="error_skill_import_failed">Не удалось импортировать Skill</string>
+    <string name="error_skill_delete_failed">Не удалось удалить Skill</string>
+    <string name="error_custom_tool_load_failed">Не удалось загрузить пользовательские инструменты</string>
+    <string name="error_custom_tool_save_failed">Не удалось сохранить пользовательский инструмент</string>
+    <string name="error_custom_tool_delete_failed">Не удалось удалить пользовательский инструмент</string>
+    <string name="error_memory_load_failed">Не удалось загрузить воспоминания</string>
+    <string name="error_memory_save_failed">Не удалось сохранить воспоминание</string>
+    <string name="error_memory_delete_failed">Не удалось удалить воспоминание</string>
+    <string name="feedback_feature_template">## Предложение функции
+
+## Сценарий использования
+
+## Ожидаемый результат</string>
+    <string name="host_breeno_display_name">Помощник Xiaobu</string>
+    <string name="host_xiaoai_display_name">XiaoAI</string>
+    <string name="fallback_assistant_name">Помощник</string>
+    <string name="notif_unsupported_version_title">Версия помощника не поддерживается</string>
+    <string name="notif_unsupported_version_body">Текущая версия %1$s пока не поддерживается Nexus
+Версия помощника: %2$s</string>
+    <string name="notif_unsupported_issue_title">[BUG] Версия помощника не поддерживается</string>
+    <string name="notif_unsupported_issue_body">## Описание проблемы
+Текущая версия %1$s пока не поддерживается Nexus
+Версия помощника: %2$s
+
+## Шаги воспроизведения
+
+## Информация об устройстве
+- Помощник: %1$s
+- Версия помощника: %2$s
+- Версия модуля:</string>
+    <string name="feedback_bug_template">## Описание проблемы
+
+## Шаги воспроизведения
+
+## Ожидаемое поведение
+
+## Фактическое поведение
+
+## Информация об устройстве
+- Версия Android:
+- Помощник (Xiaobu или другой):
+- Версия модуля:
+
+## Дополнительно
+Можно приложить журналы, скриншоты или запись экрана, чтобы нам было проще разобраться</string>
+    <plurals name="ui_tool_chain_count">
+        <item quantity="one">%d инструмент</item>
+        <item quantity="few">%d инструмента</item>
+        <item quantity="many">%d инструментов</item>
+        <item quantity="other">%d инструмента</item>
+    </plurals>
+</resources>
 </resources>
