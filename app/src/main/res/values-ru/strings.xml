@@ -48,5 +48,65 @@
 
     <string name="memory_page_description">Управление долговременной памятью агента.</string>
     <string name="memory_loading">Загрузка памяти...</string>
+    <string name="memory_save_action">Сохранить память</string>
+    <string name="memory_cancel_action">Отмена</string>
+    <string name="memory_delete_dialog_confirm">Удалить</string>
+
+    <string name="skill_save_action">Сохранить</string>
+    <string name="skill_import_button">Импортировать навык</string>
+    <string name="skill_loading">Загрузка навыков...</string>
+
+    <string name="execution_rules_editor_title_create">Добавить правило выполнения</string>
+    <string name="execution_rules_field_name">Название правила</string>
+    <string name="execution_rules_field_patterns">Правила</string>
+    <string name="execution_rules_delete_dialog_title">Удалить правило</string>
+
+    <string name="ui_todo_page_title">Функция в разработке</string>
+    <string name="ui_todo_page_description">Будет доступно в следующих версиях.</string>
+    <string name="ui_onboard_web_beta_body">Поддержка этого помощника пока находится в бета-стадии, поэтому в отдельных сценариях возможна нестабильная работа. Вы можете продолжить настройку, а при проблемах изменить параметры или отправить отзыв.</string>
+    <string name="ui_onboard_web_fetch_failed_title">Не удалось получить конфигурацию</string>
+    <string name="ui_onboard_web_fetch_failed_body">Не удалось подключиться к службе конфигурации. Повторите попытку или перейдите к настройке напрямую.</string>
+    <string name="ui_onboard_web_unsupported_title">Версия помощника не поддерживается</string>
+    <string name="ui_onboard_web_unsupported_body">Для текущей версии помощника ещё нет отдельной конфигурации. Применена конфигурация для ближайшей версии. При проблемах отправьте отзыв.</string>
+    <string name="ui_onboard_web_network_error_title">Ошибка сети</string>
+    <string name="ui_onboard_web_network_error_body">Проблема с сетью. Проверьте подключение, повторите попытку или перейдите к настройке напрямую.</string>
+    <string name="ui_onboard_web_enter_directly">Перейти напрямую</string>
+    <string name="ui_onboard_configure_endpoint_override_title">Собственный API-адрес</string>
+    <string name="ui_onboard_configure_endpoint_override_description_off">Используется адрес по умолчанию</string>
+    <string name="ui_onboard_configure_endpoint_override_description_on">Будет использован заданный адрес</string>
+    <string name="ui_onboard_configure_model_example">Например: %1$s</string>
+    <string name="ui_onboard_configure_api_key_show">Показать API-ключ</string>
+    <string name="ui_onboard_configure_api_key_hide">Скрыть API-ключ</string>
+    <string name="ui_onboard_configure_error_load_failed">Не удалось загрузить конфигурацию: %1$s</string>
+    <string name="ui_onboard_configure_error_save_failed">Не удалось сохранить конфигурацию: %1$s</string>
+    <string name="ui_onboard_done_description">Настройка завершена. Можно начать работу с Nexus или позже изменить параметры в настройках.</string>
+    <string name="ui_tool_status_failed_reason_interrupted">Прервано пользователем</string>
+    <string name="ui_home_action_regenerate_content_description">Сгенерировать заново</string>
+    <string name="ui_home_action_fork_content_description">Создать ветвь диалога</string>
+    <string name="ui_home_error_generic_title">Не удалось продолжить</string>
+    <string name="ui_home_error_retry_body">Повторите попытку позже.</string>
+    <string name="ui_home_error_config_required_title">Конфигурация не заполнена</string>
+    <string name="ui_home_error_config_required_body">Сначала укажите адрес модели и её название.</string>
+    <string name="ui_conversation_history_back_content_description">Назад</string>
+    <string name="ui_conversation_history_loading">Загрузка истории диалогов...</string>
+    <string name="ui_conversation_history_empty_title">История диалогов пуста</string>
+    <string name="ui_conversation_history_empty_body">После отправки сообщения диалог появится здесь.</string>
+    <string name="ui_conversation_history_error_title">Не удалось загрузить историю диалогов</string>
+    <string name="ui_conversation_history_untitled">Диалог без названия</string>
+    <string name="ui_conversation_history_delete_dialog_title">Удалить диалог</string>
+    <string name="ui_conversation_history_delete_dialog_text">Удалить этот диалог? Это действие нельзя отменить.
+
+%1$s</string>
+    <string name="ui_conversation_history_delete_dialog_confirm">Удалить</string>
+    <string name="ui_conversation_history_delete_dialog_cancel">Отмена</string>
+    <string name="ui_conversation_history_delete_error">Не удалось удалить диалог: %1$s</string>
+    <string name="ui_root_back_to_home_hint">Нажмите «Назад» ещё раз, чтобы выйти на главный экран</string>
+    <string name="ui_settings_menu_entry">Настройки</string>
+    <string name="ui_settings_model_config_summary">Настройка подключения модели в Nexus</string>
+    <string name="ui_settings_memory_summary">Управление сохранёнными воспоминаниями и предпочтениями</string>
+    <string name="ui_settings_builtin_tools_summary">Управление встроенными инструментами Nexus</string>
+    <string name="ui_settings_skills_summary">Управление локальными Skills</string>
+    <string name="skill_page_description">Включайте и отключайте локальные Skills. После включения агент сможет использовать их в диалоге при необходимости.</string>
+    <string name="skill_empty">Нет доступных Skills.</string>
     <!-- L10N_CONTENT -->
 </resources>
