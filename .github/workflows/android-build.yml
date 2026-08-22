@@ -11,6 +11,7 @@ on:
 
 permissions:
   contents: read
+  pull-requests: write
 
 jobs:
   build-debug-apk:
@@ -71,12 +72,29 @@ jobs:
           ./gradlew testDebugUnitTest --no-daemon --stacktrace > gradle-test-failure.log 2>&1
           status=$?
           python3 - <<'PY'
+          import json
+          import os
           from pathlib import Path
+          from urllib.request import Request, urlopen
 
           output = Path("gradle-test-failure.log").read_text(errors="replace")
-          tail = "\n".join(output.splitlines()[-60:])[-6000:]
-          escaped = tail.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
-          print(f"::error title=Gradle failure tail::exit code {status}%0A{escaped}")
+          tail = "\n".join(output.splitlines()[-80:])[-12000:]
+          event = json.loads(Path(os.environ["GITHUB_EVENT_PATH"]).read_text())
+          pull_request = event.get("pull_request")
+          if pull_request:
+              body = f"CI Gradle diagnostic (exit code {status}):\n\n```text\n{tail}\n```"
+              request = Request(
+                  f"{os.environ['GITHUB_API_URL']}/repos/{os.environ['GITHUB_REPOSITORY']}/issues/{pull_request['number']}/comments",
+                  data=json.dumps({"body": body}).encode(),
+                  headers={
+                      "Accept": "application/vnd.github+json",
+                      "Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}",
+                      "Content-Type": "application/json",
+                  },
+                  method="POST",
+              )
+              with urlopen(request) as response:
+                  print(f"Published Gradle diagnostic comment: {response.status}")
           PY
           exit 0
 
