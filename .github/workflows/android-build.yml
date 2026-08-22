@@ -71,7 +71,11 @@ jobs:
           ./gradlew testDebugUnitTest --no-daemon --stacktrace > gradle-test-failure.log 2>&1
           status=$?
           printf '\nDiagnostic Gradle exit code: %s\n' "$status" >> gradle-test-failure.log
-          tail -80 gradle-test-failure.log
+          while IFS= read -r line; do
+            line=${line//'%'/'%25'}
+            line=${line//$'\r'/'%0D'}
+            echo "::error title=Gradle failure::$line"
+          done < <(tail -80 gradle-test-failure.log)
           exit 0
 
       - name: Upload Gradle diagnostic
