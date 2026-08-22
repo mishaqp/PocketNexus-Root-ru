@@ -257,5 +257,6 @@
     <string name="mcp_field_url">URL</string>
     <string name="mcp_field_url_hint">Например: https://a.b.c/mcp</string>
     <string name="mcp_field_enabled">Включить сервис</string>
+    <string name="mcp_field_headers">Заголовки</string>
     <!-- L10N_CONTENT -->
 </resources>
