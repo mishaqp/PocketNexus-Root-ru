@@ -31,6 +31,10 @@
     <string name="ui_onboard_configure_model_label">Model ID</string>
     <string name="ui_onboard_configure_model_placeholder">Enter your model ID</string>
     <string name="ui_onboard_configure_model_example">Example: %1$s</string>
+<string name="ui_onboard_configure_model_refresh">Find models</string>
+<string name="ui_onboard_configure_model_refresh_loading">Loading...</string>
+<string name="ui_onboard_configure_model_refresh_failed">Failed to load models</string>
+<string name="ui_onboard_configure_model_pick">Select a model</string>
     <string name="ui_onboard_configure_api_key_label">API Key</string>
     <string name="ui_onboard_configure_api_key_placeholder">Enter your API Key</string>
     <string name="ui_onboard_configure_api_key_show">Show API Key</string>

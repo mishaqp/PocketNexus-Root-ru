@@ -1,7 +1,28 @@
 package com.niki914.nexus.agentic.app.ui.nexus.content
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+
+import androidx.compose.ui.unit.dp
 import com.niki914.nexus.agentic.app.R
 import com.niki914.nexus.agentic.app.ui.infra.component.SettingExpandableTextItem
 import com.niki914.nexus.agentic.app.ui.infra.component.SettingToggleItem
@@ -18,6 +39,7 @@ internal fun ProviderAccessSettingsBlock(
     onEndpointOverrideChange: (Boolean) -> Unit,
     onEndpointChange: (String) -> Unit,
     onModelChange: (String) -> Unit,
+    onRefreshModels: () -> Unit,
     onApiKeyChange: (String) -> Unit,
     onToggleApiKeyVisibility: () -> Unit,
     onClearActiveField: () -> Unit,
@@ -94,6 +116,11 @@ internal fun ProviderAccessSettingsBlock(
                 )
             },
         )
+        ModelCatalogActions(
+            uiState = uiState,
+            onModelSelected = onModelChange,
+            onRefreshModels = onRefreshModels,
+        )
         SettingsItemDivider()
         SettingExpandableTextItem(
             title = stringResource(R.string.ui_onboard_configure_api_key_label),
@@ -119,5 +146,65 @@ internal fun ProviderAccessSettingsBlock(
                 )
             },
         )
+    }
+}
+
+@Composable
+private fun ModelCatalogActions(
+    uiState: ConfigureUiState,
+    onModelSelected: (String) -> Unit,
+    onRefreshModels: () -> Unit,
+) {
+    var expanded by remember { mutableStateOf(false) }
+    val refreshEnabled = uiState.apiKeyInput.isNotBlank() &&
+        uiState.endpointInput.isNotBlank() &&
+        !uiState.modelsLoading &&
+        !uiState.isSaving
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        TextButton(onClick = onRefreshModels, enabled = refreshEnabled) {
+            Icon(
+                imageVector = Icons.Default.Refresh,
+                contentDescription = null,
+                modifier = Modifier.size(16.dp),
+            )
+            Text(stringResource(R.string.ui_onboard_configure_model_refresh))
+        }
+
+        when {
+            uiState.modelsLoading -> {
+                Text(stringResource(R.string.ui_onboard_configure_model_refresh_loading))
+            }
+            uiState.modelsErrorResId != null -> {
+                Text(stringResource(uiState.modelsErrorResId))
+            }
+            uiState.availableModels.isNotEmpty() -> {
+                Box {
+                    TextButton(onClick = { expanded = true }) {
+                        Text(stringResource(R.string.ui_onboard_configure_model_pick))
+                    }
+                    DropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false },
+                    ) {
+                        uiState.availableModels.forEach { model ->
+                            DropdownMenuItem(
+                                text = { Text(model) },
+                                onClick = {
+                                    onModelSelected(model)
+                                    expanded = false
+                                },
+                            )
+                        }
+                    }
+                }
+            }
+        }
     }
 }

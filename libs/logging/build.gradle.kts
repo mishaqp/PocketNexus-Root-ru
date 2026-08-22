@@ -8,7 +8,7 @@ plugins {
 kotlin {
     android {
         namespace = "com.niki914.logging"
-        compileSdk = 37
+        compileSdk = 36
         minSdk = 26
     }
     jvm {

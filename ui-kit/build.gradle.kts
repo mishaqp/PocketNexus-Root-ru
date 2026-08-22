@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.niki914.nexus.base"
-    compileSdk = 37
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 26
@@ -44,7 +44,7 @@ dependencies {
     implementation("androidx.annotation:annotation:1.9.1")
 
     // Compose
-    implementation("androidx.compose.material3:material3:1.5.0-alpha22")
+    implementation("androidx.compose.material3:material3:1.3.2")
     implementation("androidx.compose.material:material-icons-core:1.7.8")
     implementation("androidx.compose.material:material-icons-extended:1.7.8")
     debugImplementation("androidx.compose.ui:ui-tooling:1.4.0")

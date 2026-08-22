@@ -75,6 +75,10 @@
     <string name="ui_onboard_configure_endpoint_override_description_off">Используется адрес по умолчанию</string>
     <string name="ui_onboard_configure_endpoint_override_description_on">Будет использован заданный адрес</string>
     <string name="ui_onboard_configure_model_example">Например: %1$s</string>
+<string name="ui_onboard_configure_model_refresh">Найти модели</string>
+<string name="ui_onboard_configure_model_refresh_loading">Поиск...</string>
+<string name="ui_onboard_configure_model_refresh_failed">Не удалось получить список моделей</string>
+<string name="ui_onboard_configure_model_pick">Выбрать модель</string>
     <string name="ui_onboard_configure_api_key_show">Показать API-ключ</string>
     <string name="ui_onboard_configure_api_key_hide">Скрыть API-ключ</string>
     <string name="ui_onboard_configure_error_load_failed">Не удалось загрузить конфигурацию: %1$s</string>

@@ -1,6 +1,9 @@
 name: Android Debug Build
 
 on:
+  pull_request:
+    branches:
+      - main
   push:
     branches:
       - main
@@ -20,19 +23,68 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '17'
-          cache: gradle
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          packages: platforms;android-36 build-tools;36.0.0
 
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+
+      - name: Run debug unit tests
+        run: ./gradlew testDebugUnitTest --no-daemon --stacktrace
+
+      - name: Publish unit test failures
+        if: failure()
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from xml.etree import ElementTree
+
+          reports = list(Path("app/build/test-results").rglob("TEST-*.xml"))
+          if not reports:
+              print("::error title=Unit test reports::No JUnit XML reports were produced.")
+          for report in reports:
+              root = ElementTree.parse(report).getroot()
+              for case in root.iter("testcase"):
+                  failure = case.find("failure") or case.find("error")
+                  if failure is None:
+                      continue
+                  suite = case.get("classname", report.stem)
+                  name = case.get("name", "unknown")
+                  detail = " ".join((failure.text or failure.get("message", "Test failed")).split())
+                  print(f"::error title={suite}.{name}::{detail[:1500]}")
+          PY
+
+      - name: Capture Gradle failure
+        if: failure()
+        run: |
+          set +e
+          ./gradlew testDebugUnitTest --no-daemon --stacktrace > gradle-test-failure.log 2>&1
+          status=$?
+          printf '\nDiagnostic Gradle exit code: %s\n' "$status" >> gradle-test-failure.log
+          while IFS= read -r line; do
+            line=${line//'%'/'%25'}
+            line=${line//$'\r'/'%0D'}
+            echo "::error title=Gradle failure::$line"
+          done < <(tail -80 gradle-test-failure.log)
+          exit 0
+
+      - name: Upload Gradle diagnostic
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gradle-test-failure-log
+          path: gradle-test-failure.log
+          if-no-files-found: error
+          retention-days: 7
 
       - name: Build debug APK
         run: ./gradlew :app:assembleDebug --no-daemon --stacktrace
