@@ -1,4 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Nexus RU</string>
+    <string name="xposed_desc">Подключение голосового помощника к вашей модели ИИ\n\nПоддерживается:\n\n- ColorOS XiaoBu\n- HyperOS XiaoAi</string>
+
+    <string name="ui_onboard_startup_demo_button">Начать</string>
+    <string name="ui_onboard_web_beta_title">Поддержка находится в Beta</string>
+    <string name="ui_onboard_web_confirm">Подтвердить</string>
+    <string name="ui_onboard_web_cancel">Отмена</string>
+    <string name="ui_onboard_web_retry">Повторить</string>
+    <string name="ui_onboard_provider_pick_title">Выбор провайдера</string>
+    <string name="ui_onboard_provider_pick_description">Выберите поставщика модели для продолжения.</string>
+    <string name="ui_onboard_configure_title">Настройка подключения модели</string>
+    <string name="ui_onboard_configure_description">Укажите параметры модели, после чего можно начать работу.</string>
+    <string name="ui_onboard_configure_next">Далее</string>
+    <string name="ui_onboard_configure_endpoint_label">Адрес API</string>
+    <string name="ui_onboard_configure_endpoint_placeholder">Введите адрес API</string>
+    <string name="ui_onboard_configure_model_label">Модель</string>
+    <string name="ui_onboard_configure_model_placeholder">Введите имя модели</string>
+    <string name="ui_onboard_configure_api_key_label">API Key</string>
+    <string name="ui_onboard_configure_api_key_placeholder">Введите ключ API</string>
+    <string name="ui_onboard_done_headline">Готово.</string>
+    <string name="ui_onboard_done_enter_home">Открыть Nexus</string>
+
+    <string name="ui_home_title">Nexus</string>
+    <string name="ui_home_menu_new_conversation">Новый диалог</string>
+    <string name="ui_home_input_placeholder">Введите сообщение...</string>
+    <string name="ui_tool_status_running">Выполняется</string>
+    <string name="ui_tool_status_success">Успешно</string>
+    <string name="ui_tool_status_failed">Ошибка</string>
+    <string name="ui_home_send_content_description">Отправить сообщение</string>
+    <string name="ui_home_stop_content_description">Остановить генерацию</string>
+    <string name="ui_home_action_copy_content_description">Копировать</string>
+    <string name="ui_toast_copied">Скопировано</string>
+    <string name="ui_home_history_content_description">История диалогов</string>
+
+    <string name="ui_settings_title">Настройки</string>
+    <string name="ui_settings_section_model">Модель</string>
+    <string name="ui_settings_section_tools">Инструменты</string>
+    <string name="ui_settings_section_rules">Правила</string>
+    <string name="ui_settings_section_app">Приложение</string>
+    <string name="ui_settings_model_config">Настройка модели</string>
+    <string name="ui_settings_memory">Память</string>
+    <string name="ui_settings_builtin_tools">Встроенные инструменты</string>
+    <string name="ui_settings_skills">Навыки</string>
+    <string name="ui_settings_mcp">MCP</string>
+    <string name="ui_settings_about">О приложении</string>
+
+    <string name="memory_page_description">Управление долговременной памятью агента.</string>
+    <string name="memory_loading">Загрузка памяти...</string>
     <!-- L10N_CONTENT -->
 </resources>
