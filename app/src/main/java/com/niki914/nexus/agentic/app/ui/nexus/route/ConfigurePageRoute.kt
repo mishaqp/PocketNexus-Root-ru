@@ -75,6 +75,9 @@ internal fun ConfigurePageRoute(
         onModelChange = { model ->
             viewModel.sendIntent(ConfigureIntent.UpdateModel(model))
         },
+        onRefreshModels = {
+            viewModel.sendIntent(ConfigureIntent.RefreshModels)
+        },
         onApiKeyChange = { apiKey ->
             viewModel.sendIntent(ConfigureIntent.UpdateApiKey(apiKey))
         },
